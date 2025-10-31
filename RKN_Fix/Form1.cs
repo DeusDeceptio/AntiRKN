@@ -157,6 +157,16 @@ namespace RKN_Fix
 
         private void buttonStartZapDef_Click(object sender, EventArgs e)
         {
+            startDefConf();
+        }
+
+        private void êîíôèãÏîÓìîë÷àíèşToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            startDefConf();
+        }
+
+        private void startDefConf()
+        {
             if (!string.IsNullOrEmpty(Properties.Settings.Default.defaultConfig))
             {
                 Process.Start(Application.StartupPath + @"pre-configs\" + Properties.Settings.Default.defaultConfig);

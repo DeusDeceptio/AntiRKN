@@ -318,6 +318,7 @@
             notifyIcon1 = new NotifyIcon(components);
             contextMenuStripNotify = new ContextMenuStrip(components);
             открытьМенюToolStripMenuItem = new ToolStripMenuItem();
+            конфигПоУмолчаниюToolStripMenuItem = new ToolStripMenuItem();
             выходToolStripMenuItem = new ToolStripMenuItem();
             button1 = new Button();
             checkedListBoxLists = new CheckedListBox();
@@ -372,21 +373,28 @@
             // 
             // contextMenuStripNotify
             // 
-            contextMenuStripNotify.Items.AddRange(new ToolStripItem[] { открытьМенюToolStripMenuItem, выходToolStripMenuItem });
+            contextMenuStripNotify.Items.AddRange(new ToolStripItem[] { открытьМенюToolStripMenuItem, конфигПоУмолчаниюToolStripMenuItem, выходToolStripMenuItem });
             contextMenuStripNotify.Name = "contextMenuStrip1";
-            contextMenuStripNotify.Size = new Size(157, 48);
+            contextMenuStripNotify.Size = new Size(203, 70);
             // 
             // открытьМенюToolStripMenuItem
             // 
             открытьМенюToolStripMenuItem.Name = "открытьМенюToolStripMenuItem";
-            открытьМенюToolStripMenuItem.Size = new Size(156, 22);
+            открытьМенюToolStripMenuItem.Size = new Size(202, 22);
             открытьМенюToolStripMenuItem.Text = "Открыть меню";
             открытьМенюToolStripMenuItem.Click += открытьМенюToolStripMenuItem_Click;
+            // 
+            // конфигПоУмолчаниюToolStripMenuItem
+            // 
+            конфигПоУмолчаниюToolStripMenuItem.Name = "конфигПоУмолчаниюToolStripMenuItem";
+            конфигПоУмолчаниюToolStripMenuItem.Size = new Size(202, 22);
+            конфигПоУмолчаниюToolStripMenuItem.Text = "Конфиг по умолчанию";
+            конфигПоУмолчаниюToolStripMenuItem.Click += конфигПоУмолчаниюToolStripMenuItem_Click;
             // 
             // выходToolStripMenuItem
             // 
             выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            выходToolStripMenuItem.Size = new Size(156, 22);
+            выходToolStripMenuItem.Size = new Size(202, 22);
             выходToolStripMenuItem.Text = "Выход";
             выходToolStripMenuItem.Click += close_Click;
             // 
@@ -804,5 +812,6 @@
         private CheckBox checkBoxAutoStart;
         private CheckBox checkBoxQuiet;
         private Button button5;
+        private ToolStripMenuItem конфигПоУмолчаниюToolStripMenuItem;
     }
 }
