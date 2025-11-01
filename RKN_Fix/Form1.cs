@@ -1,7 +1,5 @@
 using Microsoft.Win32;
-using System;
 using System.Diagnostics;
-using System.Reflection;
 
 namespace RKN_Fix
 {
@@ -31,6 +29,17 @@ namespace RKN_Fix
             checkBoxQuiet.Checked = Properties.Settings.Default.quietStart;
             if (Properties.Settings.Default.quietStart)
                 hideForm();
+
+            ToolTip toolTip1 = new ToolTip();
+
+            toolTip1.AutoPopDelay = 5000;
+            toolTip1.InitialDelay = 1000;
+            toolTip1.ReshowDelay = 500;
+            
+            toolTip1.ShowAlways = true;
+
+            toolTip1.SetToolTip(this.buttonSearchConf, "Активна, если в вашей сборке есть \"АВТО - ПОИСК пре - конфига.exe\"");
+            toolTip1.SetToolTip(this.buttonAutoConfig, "Активна, если в вашей сборке есть \"Установить как службу в АВТОЗАПУСК v2.exe\"");
         }
 
         private void buttonUpdate_Click(object sender, EventArgs e)
@@ -44,8 +53,6 @@ namespace RKN_Fix
             updateConfigList();
             updateVPNList();
             updateContextMenuNotify();
-            buttonSearchConf.Enabled = File.Exists(Application.StartupPath + "АВТО-ПОИСК пре-конфига.exe");
-            buttonAutoConfig.Enabled = File.Exists(Application.StartupPath + "Установить как службу в АВТОЗАПУСК v2.exe");
         }
 
         private void updateContextMenuNotify()
@@ -322,16 +329,19 @@ namespace RKN_Fix
 
         private void checkBoxAutoStart_CheckedChanged(object sender, EventArgs e)
         {
-            Properties.Settings.Default.autostart = checkBoxAutoStart.Checked;
-            RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            if (checkBoxAutoStart.Checked)
+            using ()
             {
-                rkApp.SetValue("RKN_Fix", Application.ExecutablePath);
-            }
-            else
-            {
-                rkApp.DeleteValue("RKN_Fix");
-            }
+                Properties.Settings.Default.autostart = checkBoxAutoStart.Checked;
+                RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                if (checkBoxAutoStart.Checked)
+                {
+                    rkApp.SetValue("RKN_Fix", Application.ExecutablePath);
+                }
+                else
+                {
+                    rkApp.DeleteValue("RKN_Fix");
+                }
+            }                
         }
 
         private void otherVPNinContMenu_Click(object sender, EventArgs e)
@@ -363,6 +373,7 @@ namespace RKN_Fix
 
         private void buttonSearchConf_Click(object sender, EventArgs e)
         {
+            if (!File.Exists(Application.StartupPath + "АВТО-ПОИСК пре-конфига.exe")) return;
             try
             {
                 Process.Start(Application.StartupPath + "АВТО-ПОИСК пре-конфига.exe");
@@ -372,6 +383,7 @@ namespace RKN_Fix
 
         private void buttonAutoConfig_Click(object sender, EventArgs e)
         {
+            if (!File.Exists(Application.StartupPath + "Установить как службу в АВТОЗАПУСК v2.exe")) return;
             try
             {
                 Process.Start(Application.StartupPath + "Установить как службу в АВТОЗАПУСК v2.exe");
