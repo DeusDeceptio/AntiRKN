@@ -64,7 +64,7 @@ namespace AntiRKN
             contextMenuStripNotify.Items.AddRange([
                 îòêðûòüÌåíþToolStripMenuItem,
                 êîíôèãÏîÓìîë÷àíèþToolStripMenuItem ]);
-            if (otherVPNList.Count == 0)            
+            if (otherVPNList.Count > 0)            
                 for (int i = 0; i < otherVPNList.Count; i++)
                 {
                     ToolStripMenuItem toolStripButton = new ToolStripMenuItem();          
