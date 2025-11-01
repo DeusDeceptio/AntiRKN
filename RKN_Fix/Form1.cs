@@ -60,17 +60,24 @@ namespace AntiRKN
 
         private void updateContextMenuNotify()
         {
-            if (otherVPNList.Count == 0) return;
-            for (int i = 0; i < otherVPNList.Count; i++)
-            {
-                ToolStripMenuItem toolStripButton = new ToolStripMenuItem();
-                toolStripButton.Text =
-                    !string.IsNullOrEmpty(otherVPNList[i][0].Trim()) ? otherVPNList[i][0]
-                                           : Path.GetFileName(otherVPNList[i][1]);
-                toolStripButton.Tag = i;
-                toolStripButton.Click += otherVPNinContMenu_Click;
-                contextMenuStripNotify.Items.Insert(i + 2, toolStripButton);
-            }
+            contextMenuStripNotify.Items.Clear();
+            contextMenuStripNotify.Items.AddRange([
+                îòêðûòüÌåíþToolStripMenuItem,
+                êîíôèãÏîÓìîë÷àíèþToolStripMenuItem ]);
+            if (otherVPNList.Count == 0)            
+                for (int i = 0; i < otherVPNList.Count; i++)
+                {
+                    ToolStripMenuItem toolStripButton = new ToolStripMenuItem();          
+                    toolStripButton.Text = !string.IsNullOrEmpty(otherVPNList[i][0].Trim())
+                                         ? otherVPNList[i][0]
+                                         : Path.GetFileName(otherVPNList[i][1]);
+                    toolStripButton.Tag = i;
+                    toolStripButton.Click += otherVPNinContMenu_Click;
+                    contextMenuStripNotify.Items.Add(toolStripButton);
+                }
+            contextMenuStripNotify.Items.AddRange([
+                îòêëþ÷èòüÂñåToolStripMenuItem,
+                âûõîäToolStripMenuItem ]);
         }
 
         private void updateBoxLists()
