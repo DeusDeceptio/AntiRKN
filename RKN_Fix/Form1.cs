@@ -243,6 +243,7 @@ namespace AntiRKN
 
         private void buttonSaveVPN_Click(object sender, EventArgs e)
         {
+            if (textBoxPath.Text == "") return;
             string inFile = textBoxName.Text + "\t" + textBoxPath.Text + "\t" + textBoxArg.Text;
             Properties.Settings.Default.otherVPNs += inFile;
             string[] strings = { textBoxName.Text, textBoxPath.Text, textBoxArg.Text };
@@ -357,7 +358,7 @@ namespace AntiRKN
 
         private void buttonStop_Click(object sender, EventArgs e)
         {
-            int mode = (int)(sender as Button).Tag;
+            int mode = Convert.ToInt32((sender as Button).Tag);
             KillProcesses killProcesses = new KillProcesses();
             killProcesses.mode = mode;
             if (mode <= 1)
