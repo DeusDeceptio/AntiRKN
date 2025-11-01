@@ -1,4 +1,4 @@
-﻿namespace RKN_Fix
+﻿namespace AntiRKN
 {
     partial class KillProcesses
     {

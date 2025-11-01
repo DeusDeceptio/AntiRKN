@@ -1,6 +1,6 @@
 using System.Drawing.Imaging;
 
-namespace RKN_Fix
+namespace AntiRKN
 {
     internal static class Program
     {

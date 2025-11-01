@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace RKN_Fix
+namespace AntiRKN
 {
     public partial class Form1 : Form
     {
@@ -22,7 +22,7 @@ namespace RKN_Fix
                 ApplyLightTheme();
             else
                 ApplyDarkTheme();
-
+            
             checkBoxAutoStart.Checked = Properties.Settings.Default.autostart;
 
             checkBoxQuiet.Checked = Properties.Settings.Default.quietStart;
@@ -333,11 +333,11 @@ namespace RKN_Fix
             Properties.Settings.Default.autostart = checkBoxAutoStart.Checked;
             if (checkBoxAutoStart.Checked)
             {
-                rkApp.SetValue("RKN_Fix", Application.ExecutablePath);
+                rkApp.SetValue("AntiRKN", Application.ExecutablePath);
             }
             else
             {
-                rkApp.DeleteValue("RKN_Fix");
+                rkApp.DeleteValue("AntiRKN");
             }              
         }
 

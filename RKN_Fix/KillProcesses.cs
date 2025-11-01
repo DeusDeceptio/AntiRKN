@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace RKN_Fix
+namespace AntiRKN
 {
     public partial class KillProcesses : Form
     {
