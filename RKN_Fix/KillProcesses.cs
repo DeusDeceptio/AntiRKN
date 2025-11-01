@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Diagnostics;
 
 namespace AntiRKN
 {
     public partial class KillProcesses : Form
     {
-        internal int mode = 0;
         internal List<string> processesName = new List<string>();
         public KillProcesses()
         {
@@ -22,31 +12,9 @@ namespace AntiRKN
 
         private void KillProcesses_Load(object sender, EventArgs e)
         {
-            switch (mode)
-            {
-                case 0:
-                    {
-                        killZapret();
-                        progressBar1.Value = 10;
-                        killOtherVPN(90);
-                        break;
-                    }
-                case 2:
-                    {
-                        killZapret();
-                        break;
-                    }
-                case 1:
-                    {
-                        killOtherVPN(100);
-                        break;
-                    }
-                default:
-                    {
-                        
-                        break;
-                    }
-            }
+            killZapret();
+            progressBar1.Value = 10;
+            killOtherVPN();
             progressBar1.Value = 100;
             this.Close();
 
@@ -62,7 +30,7 @@ namespace AntiRKN
             }
         }
 
-        private void killOtherVPN(int ostBar)
+        private void killOtherVPN()
         {
             foreach (var name in processesName)
             {

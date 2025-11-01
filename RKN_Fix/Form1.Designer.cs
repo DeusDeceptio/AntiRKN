@@ -44,14 +44,13 @@
             // Кнопки 
             var buttons = new[] { buttonClose, buttonSaveLists, button2, buttonUpdate, buttonStartZapDef,
                          buttonStartZap, buttonOpenExplorer, buttonSaveVPN, buttonDeleteVPN, buttonStartVPN, buttonResetSettings, 
-                         buttonAutoConfig, buttonSearchConf, buttonStopAll, buttonStopVPN, buttonStopZapret};
+                         buttonAutoConfig, buttonSearchConf, buttonStopAll };
             foreach (var button in buttons)
             {
                 if (button != null)
                 {
                     button.BackColor = defaultControlColor;
                     button.ForeColor = defaultForeColor;
-                    button.FlatStyle = FlatStyle.Standard;
                     button.UseVisualStyleBackColor = true;
                 }
             }
@@ -75,7 +74,6 @@
                 {
                     textBox.BackColor = defaultWindowColor;
                     textBox.ForeColor = defaultTextColor;
-                    textBox.BorderStyle = BorderStyle.Fixed3D;
                 }
             }
 
@@ -87,7 +85,6 @@
                 {
                     listBox.BackColor = defaultWindowColor;
                     listBox.ForeColor = defaultTextColor;
-                    listBox.BorderStyle = BorderStyle.Fixed3D;
                 }
             }
 
@@ -170,14 +167,13 @@
             // Кнопки
             var buttons = new[] { buttonClose, buttonSaveLists, button2, buttonUpdate, buttonStartZapDef,
                          buttonStartZap, buttonOpenExplorer, buttonSaveVPN, buttonDeleteVPN, buttonStartVPN, buttonResetSettings,
-                         buttonAutoConfig, buttonSearchConf, buttonStopAll, buttonStopVPN, buttonStopZapret };
+                         buttonAutoConfig, buttonSearchConf, buttonStopAll };
             foreach (var button in buttons)
             {
                 if (button != null)
                 {
                     button.BackColor = controlDark;
                     button.ForeColor = foreColor;
-                    button.FlatStyle = FlatStyle.Flat;
                     button.FlatAppearance.BorderColor = borderColor;
                     button.FlatAppearance.MouseOverBackColor = controlLight;
                     button.FlatAppearance.MouseDownBackColor = highlightColor;
@@ -203,7 +199,6 @@
                 {
                     textBox.BackColor = controlDark;
                     textBox.ForeColor = foreColor;
-                    textBox.BorderStyle = BorderStyle.FixedSingle;
                 }
             }
 
@@ -215,7 +210,6 @@
                 {
                     listBox.BackColor = controlDark;
                     listBox.ForeColor = foreColor;
-                    listBox.BorderStyle = BorderStyle.FixedSingle;
                 }
             }
 
@@ -316,6 +310,7 @@
             contextMenuStripNotify = new ContextMenuStrip(components);
             открытьМенюToolStripMenuItem = new ToolStripMenuItem();
             конфигПоУмолчаниюToolStripMenuItem = new ToolStripMenuItem();
+            отключитьВсеToolStripMenuItem = new ToolStripMenuItem();
             выходToolStripMenuItem = new ToolStripMenuItem();
             buttonClose = new Button();
             checkedListBoxLists = new CheckedListBox();
@@ -325,7 +320,6 @@
             buttonUpdate = new Button();
             listBoxConfigs = new ListBox();
             groupBox2 = new GroupBox();
-            buttonStopZapret = new Button();
             label1 = new Label();
             buttonStartZapDef = new Button();
             buttonStartZap = new Button();
@@ -336,7 +330,6 @@
             toolStripMenuItem1 = new ToolStripMenuItem();
             toolStripMenuItem2 = new ToolStripMenuItem();
             groupBox3 = new GroupBox();
-            buttonStopVPN = new Button();
             buttonStartVPN = new Button();
             label4 = new Label();
             buttonDeleteVPN = new Button();
@@ -375,9 +368,9 @@
             // 
             // contextMenuStripNotify
             // 
-            contextMenuStripNotify.Items.AddRange(new ToolStripItem[] { открытьМенюToolStripMenuItem, конфигПоУмолчаниюToolStripMenuItem, выходToolStripMenuItem });
+            contextMenuStripNotify.Items.AddRange(new ToolStripItem[] { открытьМенюToolStripMenuItem, конфигПоУмолчаниюToolStripMenuItem, отключитьВсеToolStripMenuItem, выходToolStripMenuItem });
             contextMenuStripNotify.Name = "contextMenuStrip1";
-            contextMenuStripNotify.Size = new Size(203, 70);
+            contextMenuStripNotify.Size = new Size(203, 92);
             // 
             // открытьМенюToolStripMenuItem
             // 
@@ -392,6 +385,14 @@
             конфигПоУмолчаниюToolStripMenuItem.Size = new Size(202, 22);
             конфигПоУмолчаниюToolStripMenuItem.Text = "Конфиг по умолчанию";
             конфигПоУмолчаниюToolStripMenuItem.Click += buttonStartZapDef_Click;
+            // 
+            // отключитьВсеToolStripMenuItem
+            // 
+            отключитьВсеToolStripMenuItem.Name = "отключитьВсеToolStripMenuItem";
+            отключитьВсеToolStripMenuItem.Size = new Size(202, 22);
+            отключитьВсеToolStripMenuItem.Tag = "0";
+            отключитьВсеToolStripMenuItem.Text = "Отключить все";
+            отключитьВсеToolStripMenuItem.Click += buttonStop_Click;
             // 
             // выходToolStripMenuItem
             // 
@@ -475,7 +476,6 @@
             // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(buttonStopZapret);
             groupBox2.Controls.Add(label1);
             groupBox2.Controls.Add(buttonStartZapDef);
             groupBox2.Controls.Add(buttonStartZap);
@@ -487,17 +487,6 @@
             groupBox2.TabIndex = 5;
             groupBox2.TabStop = false;
             groupBox2.Text = "Конфиги Zapret";
-            // 
-            // buttonStopZapret
-            // 
-            buttonStopZapret.Location = new Point(162, 375);
-            buttonStopZapret.Name = "buttonStopZapret";
-            buttonStopZapret.Size = new Size(80, 20);
-            buttonStopZapret.TabIndex = 16;
-            buttonStopZapret.Tag = "2";
-            buttonStopZapret.Text = "Остановить";
-            buttonStopZapret.UseVisualStyleBackColor = true;
-            buttonStopZapret.Click += buttonStop_Click;
             // 
             // label1
             // 
@@ -576,7 +565,6 @@
             // 
             // groupBox3
             // 
-            groupBox3.Controls.Add(buttonStopVPN);
             groupBox3.Controls.Add(buttonStartVPN);
             groupBox3.Controls.Add(label4);
             groupBox3.Controls.Add(buttonDeleteVPN);
@@ -594,17 +582,6 @@
             groupBox3.TabIndex = 6;
             groupBox3.TabStop = false;
             groupBox3.Text = "Прочие обходы";
-            // 
-            // buttonStopVPN
-            // 
-            buttonStopVPN.Location = new Point(144, 428);
-            buttonStopVPN.Name = "buttonStopVPN";
-            buttonStopVPN.Size = new Size(100, 25);
-            buttonStopVPN.TabIndex = 9;
-            buttonStopVPN.Tag = "1";
-            buttonStopVPN.Text = "Остановить";
-            buttonStopVPN.UseVisualStyleBackColor = true;
-            buttonStopVPN.Click += buttonStop_Click;
             // 
             // buttonStartVPN
             // 
@@ -755,7 +732,7 @@
             // 
             // buttonStopAll
             // 
-            buttonStopAll.Location = new Point(518, 73);
+            buttonStopAll.Location = new Point(400, 22);
             buttonStopAll.Name = "buttonStopAll";
             buttonStopAll.Size = new Size(100, 25);
             buttonStopAll.TabIndex = 8;
@@ -878,9 +855,8 @@
         private Button buttonResetSettings;
         private ToolStripMenuItem конфигПоУмолчаниюToolStripMenuItem;
         private Button buttonStopAll;
-        private Button buttonStopVPN;
-        private Button buttonStopZapret;
         private Button buttonSearchConf;
         private Button buttonAutoConfig;
+        private ToolStripMenuItem отключитьВсеToolStripMenuItem;
     }
 }

@@ -5,6 +5,7 @@ namespace AntiRKN
     public partial class Form1 : Form
     {
         List<string[]> otherVPNList = new List<string[]>();
+        string pathConfigs = Application.StartupPath;
 
         public Form1()
         {
@@ -13,6 +14,8 @@ namespace AntiRKN
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            if (Directory.Exists(Application.StartupPath + "pre-configs"))
+                pathConfigs += "pre-configs\\";
             this.notifyIcon1.Visible = false;
             readSettings();
             updateUI();
@@ -39,6 +42,7 @@ namespace AntiRKN
 
             toolTip1.SetToolTip(this.buttonSearchConf, "Активна, если в вашей сборке есть \"АВТО - ПОИСК пре - конфига.exe\"");
             toolTip1.SetToolTip(this.buttonAutoConfig, "Активна, если в вашей сборке есть \"Установить как службу в АВТОЗАПУСК v2.exe\"");
+            toolTip1.SetToolTip(groupBox1, "Выбор списков доступен для сборок поддерживающих эту функцию");
         }
 
         private void buttonUpdate_Click(object sender, EventArgs e)
@@ -73,10 +77,14 @@ namespace AntiRKN
         {
             checkedListBoxLists.Items.Clear();
             List<string> selectedLists = new List<string>();
-            foreach (var listName in File.ReadLines(Application.StartupPath + "lists/selected.txt"))
+            if (File.Exists(Application.StartupPath + "lists/selected.txt"))
             {
-                selectedLists.Add(listName);
+                foreach (var listName in File.ReadLines(Application.StartupPath + "lists/selected.txt"))
+                {
+                    selectedLists.Add(listName);
+                }
             }
+            
             foreach (var file in Directory.GetFiles(Application.StartupPath + "lists"))
             {
                 string fileName = Path.GetFileName(file);
@@ -95,7 +103,7 @@ namespace AntiRKN
         {
             listBoxConfigs.Items.Clear();
             textBoxSelect.Text = string.Empty;
-            foreach (var file in Directory.GetFiles(Application.StartupPath + "pre-configs"))
+            foreach (var file in Directory.GetFiles(pathConfigs, "*.bat"))
             {
                 listBoxConfigs.Items.Add(Path.GetFileName(file));
             }
@@ -192,7 +200,7 @@ namespace AntiRKN
             }
             try
             {
-                Process.Start(Application.StartupPath + @"pre-configs\" + textBoxSelect.Text);
+                Process.Start(pathConfigs + textBoxSelect.Text);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
@@ -220,7 +228,7 @@ namespace AntiRKN
             {
                 try
                 {
-                    Process.Start(Application.StartupPath + @"pre-configs\" + Properties.Settings.Default.defaultConfig);
+                    Process.Start(pathConfigs + Properties.Settings.Default.defaultConfig);
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
@@ -277,6 +285,7 @@ namespace AntiRKN
             int index = listBoxVPN.SelectedIndex;
             if (index < 0) return;
             otherVPNList.RemoveAt(index);
+            updateVPNList();
         }
 
         private void checkBoxTheme_CheckedChanged(object sender, EventArgs e)
@@ -360,12 +369,10 @@ namespace AntiRKN
         {
             int mode = Convert.ToInt32((sender as Button).Tag);
             KillProcesses killProcesses = new KillProcesses();
-            killProcesses.mode = mode;
-            if (mode <= 1)
-                foreach (var item in otherVPNList)
-                {
-                    killProcesses.processesName.Add(Path.GetFileName(item[1]).Replace(".exe", ""));
-                }
+            foreach (var item in otherVPNList)
+            {
+                killProcesses.processesName.Add(Path.GetFileName(item[1]).Replace(".exe", ""));
+            }
             killProcesses.ShowDialog();
         }
 
