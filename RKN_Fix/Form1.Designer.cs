@@ -16,13 +16,13 @@
             this.BackColor = defaultBackColor;
             this.ForeColor = defaultForeColor;
 
-            // ContextMenuStrip - возврат к стандартному рендереру
+            // ContextMenuStrip
             if (contextMenuStripNotify != null)
             {
                 contextMenuStripNotify.BackColor = defaultBackColor;
                 contextMenuStripNotify.ForeColor = defaultForeColor;
                 contextMenuStripNotify.RenderMode = ToolStripRenderMode.ManagerRenderMode;
-                contextMenuStripNotify.Renderer = null; // Возврат к стандартному рендереру
+                contextMenuStripNotify.Renderer = null; 
             }
 
             if (contextMenuStripTextBoxSelect != null)
@@ -41,9 +41,9 @@
                 contextMenuStrip1.Renderer = null;
             }
 
-            // Кнопки - возврат к стандартному стилю
+            // Кнопки 
             var buttons = new[] { button1, buttonSaveLists, button2, buttonUpdate, buttonStartZapDef,
-                         buttonStartZap, button3, button4, buttonDeleteVPN, buttonStartVPN, button5 };
+                         buttonStartZap, buttonOpenExplorer, buttonSaveVPN, buttonDeleteVPN, buttonStartVPN, buttonResetSettings };
             foreach (var button in buttons)
             {
                 if (button != null)
@@ -51,7 +51,6 @@
                     button.BackColor = defaultControlColor;
                     button.ForeColor = defaultForeColor;
                     button.FlatStyle = FlatStyle.Standard;
-                    // Сброс кастомных настроек
                     button.UseVisualStyleBackColor = true;
                 }
             }
@@ -67,7 +66,7 @@
                 }
             }
 
-            // TextBox - возврат к стандартному стилю
+            // TextBox 
             var textBoxes = new[] { textBoxSelect, textBoxArg, textBoxPath, textBoxName };
             foreach (var textBox in textBoxes)
             {
@@ -142,9 +141,6 @@
             this.BackColor = backColor;
             this.ForeColor = foreColor;
 
-            // NotifyIcon (системный трей) - настраивается через свойства
-            // notifyIcon1 обычно не имеет свойств цвета
-
             // ContextMenuStrip
             if (contextMenuStripNotify != null)
             {
@@ -172,7 +168,7 @@
 
             // Кнопки
             var buttons = new[] { button1, buttonSaveLists, button2, buttonUpdate, buttonStartZapDef,
-                         buttonStartZap, button3, button4, buttonDeleteVPN, buttonStartVPN, button5 };
+                         buttonStartZap, buttonOpenExplorer, buttonSaveVPN, buttonDeleteVPN, buttonStartVPN, buttonResetSettings };
             foreach (var button in buttons)
             {
                 if (button != null)
@@ -256,7 +252,6 @@
             }
         }
 
-        // Кастомный рендерер для темного меню
         public class DarkToolStripRenderer : ToolStripProfessionalRenderer
         {
             public DarkToolStripRenderer() : base(new DarkColorTable()) { }
@@ -343,14 +338,14 @@
             buttonDeleteVPN = new Button();
             textBoxName = new TextBox();
             listBoxVPN = new ListBox();
-            button3 = new Button();
-            button4 = new Button();
+            buttonOpenExplorer = new Button();
+            buttonSaveVPN = new Button();
             label3 = new Label();
             label2 = new Label();
             textBoxArg = new TextBox();
             textBoxPath = new TextBox();
             groupBox4 = new GroupBox();
-            button5 = new Button();
+            buttonResetSettings = new Button();
             checkBoxTheme = new CheckBox();
             checkBoxAutoStart = new CheckBox();
             checkBoxQuiet = new CheckBox();
@@ -389,7 +384,7 @@
             конфигПоУмолчаниюToolStripMenuItem.Name = "конфигПоУмолчаниюToolStripMenuItem";
             конфигПоУмолчаниюToolStripMenuItem.Size = new Size(202, 22);
             конфигПоУмолчаниюToolStripMenuItem.Text = "Конфиг по умолчанию";
-            конфигПоУмолчаниюToolStripMenuItem.Click += конфигПоУмолчаниюToolStripMenuItem_Click;
+            конфигПоУмолчаниюToolStripMenuItem.Click += buttonStartZapDef_Click;
             // 
             // выходToolStripMenuItem
             // 
@@ -567,8 +562,8 @@
             groupBox3.Controls.Add(buttonDeleteVPN);
             groupBox3.Controls.Add(textBoxName);
             groupBox3.Controls.Add(listBoxVPN);
-            groupBox3.Controls.Add(button3);
-            groupBox3.Controls.Add(button4);
+            groupBox3.Controls.Add(buttonOpenExplorer);
+            groupBox3.Controls.Add(buttonSaveVPN);
             groupBox3.Controls.Add(label3);
             groupBox3.Controls.Add(label2);
             groupBox3.Controls.Add(textBoxArg);
@@ -629,27 +624,27 @@
             listBoxVPN.TabIndex = 7;
             listBoxVPN.SelectedIndexChanged += listBoxVPN_SelectedIndexChanged;
             // 
-            // button3
+            // buttonOpenExplorer
             // 
-            button3.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            button3.Font = new Font("Segoe UI", 9F);
-            button3.Location = new Point(219, 302);
-            button3.Name = "button3";
-            button3.Size = new Size(25, 25);
-            button3.TabIndex = 7;
-            button3.Text = "...";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
+            buttonOpenExplorer.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonOpenExplorer.Font = new Font("Segoe UI", 9F);
+            buttonOpenExplorer.Location = new Point(219, 302);
+            buttonOpenExplorer.Name = "buttonOpenExplorer";
+            buttonOpenExplorer.Size = new Size(25, 25);
+            buttonOpenExplorer.TabIndex = 7;
+            buttonOpenExplorer.Text = "...";
+            buttonOpenExplorer.UseVisualStyleBackColor = true;
+            buttonOpenExplorer.Click += buttonOpenExplorer_Click;
             // 
-            // button4
+            // buttonSaveVPN
             // 
-            button4.Location = new Point(144, 257);
-            button4.Name = "button4";
-            button4.Size = new Size(100, 25);
-            button4.TabIndex = 11;
-            button4.Text = "Сохранить";
-            button4.UseVisualStyleBackColor = true;
-            button4.Click += button4_Click;
+            buttonSaveVPN.Location = new Point(144, 257);
+            buttonSaveVPN.Name = "buttonSaveVPN";
+            buttonSaveVPN.Size = new Size(100, 25);
+            buttonSaveVPN.TabIndex = 11;
+            buttonSaveVPN.Text = "Сохранить";
+            buttonSaveVPN.UseVisualStyleBackColor = true;
+            buttonSaveVPN.Click += buttonSaveVPN_Click;
             // 
             // label3
             // 
@@ -689,7 +684,7 @@
             // 
             // groupBox4
             // 
-            groupBox4.Controls.Add(button5);
+            groupBox4.Controls.Add(buttonResetSettings);
             groupBox4.Controls.Add(checkBoxTheme);
             groupBox4.Controls.Add(checkBoxAutoStart);
             groupBox4.Controls.Add(checkBoxQuiet);
@@ -702,15 +697,15 @@
             groupBox4.TabStop = false;
             groupBox4.Text = "Настройки";
             // 
-            // button5
+            // buttonResetSettings
             // 
-            button5.Location = new Point(512, 18);
-            button5.Name = "button5";
-            button5.Size = new Size(100, 25);
-            button5.TabIndex = 7;
-            button5.Text = "Сбросить";
-            button5.UseVisualStyleBackColor = true;
-            button5.Click += button5_Click;
+            buttonResetSettings.Location = new Point(512, 18);
+            buttonResetSettings.Name = "buttonResetSettings";
+            buttonResetSettings.Size = new Size(100, 25);
+            buttonResetSettings.TabIndex = 7;
+            buttonResetSettings.Text = "Сбросить";
+            buttonResetSettings.UseVisualStyleBackColor = true;
+            buttonResetSettings.Click += buttonResetSettings_Click;
             // 
             // checkBoxTheme
             // 
@@ -796,10 +791,10 @@
         private ToolStripMenuItem toolStripMenuItem2;
         private ToolStripMenuItem сделатьПоУмолчаниюToolStripMenuItem;
         private GroupBox groupBox3;
-        private Button button4;
+        private Button buttonSaveVPN;
         private Label label3;
         private TextBox textBoxArg;
-        private Button button3;
+        private Button buttonOpenExplorer;
         private Label label2;
         private TextBox textBoxPath;
         private Label label4;
@@ -811,7 +806,7 @@
         private CheckBox checkBoxTheme;
         private CheckBox checkBoxAutoStart;
         private CheckBox checkBoxQuiet;
-        private Button button5;
+        private Button buttonResetSettings;
         private ToolStripMenuItem конфигПоУмолчаниюToolStripMenuItem;
     }
 }

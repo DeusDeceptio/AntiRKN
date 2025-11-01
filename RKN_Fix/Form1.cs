@@ -37,17 +37,22 @@ namespace RKN_Fix
 
         private void updateUI()
         {
+            updateBoxLists();
+            updateConfigList();
+            updateVPNList();
+        }
+
+        private void updateBoxLists()
+        {
             checkedListBoxLists.Items.Clear();
-            listBoxConfigs.Items.Clear();
-            listBoxVPN.Items.Clear();
             List<string> selectedLists = new List<string>();
-            foreach (var listName in File.ReadLines("lists/selected.txt"))
+            foreach (var listName in File.ReadLines(Application.StartupPath + "lists/selected.txt"))
             {
                 selectedLists.Add(listName);
             }
-            foreach (var file in Directory.GetFiles("lists"))
+            foreach (var file in Directory.GetFiles(Application.StartupPath + "lists"))
             {
-                string fileName = file.Substring(6);
+                string fileName = Path.GetFileName(file);
                 if (fileName != "selected.txt" && fileName != "rules.txt")
                 {
                     checkedListBoxLists.Items.Add(fileName);
@@ -57,10 +62,20 @@ namespace RKN_Fix
                     }
                 }
             }
-            foreach (var file in Directory.GetFiles("pre-configs"))
+        }
+
+        private void updateConfigList()
+        {
+            listBoxConfigs.Items.Clear();
+            foreach (var file in Directory.GetFiles(Application.StartupPath + "pre-configs"))
             {
-                listBoxConfigs.Items.Add(file.Substring(12));
+                listBoxConfigs.Items.Add(Path.GetFileName(file));
             }
+        }
+
+        private void updateVPNList()
+        {
+            listBoxVPN.Items.Clear();
             foreach (var vpns in otherVPNList)
             {
                 listBoxVPN.Items.Add(!string.IsNullOrEmpty(vpns[0]) ? vpns[0] : vpns[1]);
@@ -118,12 +133,15 @@ namespace RKN_Fix
             {
                 textForFile += list + "\n";
             }
-            File.WriteAllText("lists/selected.txt", textForFile);
+            File.WriteAllText(Application.StartupPath + "lists/selected.txt", textForFile);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Process.Start("explorer.exe", "\"" + Application.StartupPath + "lists\\\"");
+            try { 
+                Process.Start("explorer.exe", "\"" + Application.StartupPath + "lists\\\"");
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -140,7 +158,10 @@ namespace RKN_Fix
                 MessageBox.Show("Выберете конфиг!");
                 return;
             }
-            Process.Start(Application.StartupPath + @"pre-configs\" + textBoxSelect.Text);
+            try { 
+                Process.Start(Application.StartupPath + @"pre-configs\" + textBoxSelect.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
         private void сделатьПоУмолчаниюToolStripMenuItem_Click(object sender, EventArgs e)
@@ -160,16 +181,15 @@ namespace RKN_Fix
             startDefConf();
         }
 
-        private void конфигПоУмолчаниюToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            startDefConf();
-        }
-
         private void startDefConf()
         {
             if (!string.IsNullOrEmpty(Properties.Settings.Default.defaultConfig))
             {
-                Process.Start(Application.StartupPath + @"pre-configs\" + Properties.Settings.Default.defaultConfig);
+                try
+                {
+                    Process.Start(Application.StartupPath + @"pre-configs\" + Properties.Settings.Default.defaultConfig);
+                }
+                catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
             else
             {
@@ -177,7 +197,7 @@ namespace RKN_Fix
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void buttonOpenExplorer_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Исполнительный файл (*.exe)|*.exe|Батники (*.bat)|*.bat|Все файлы (*.*)|*.*";
@@ -188,7 +208,7 @@ namespace RKN_Fix
             }
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void buttonSaveVPN_Click(object sender, EventArgs e)
         {
             string inFile = textBoxName.Text + "\t" + textBoxPath.Text + "\t" + textBoxArg.Text;
             Properties.Settings.Default.otherVPNs += inFile;
@@ -213,14 +233,13 @@ namespace RKN_Fix
             {
                 Process.Start(textBoxPath.Text, textBoxArg.Text);
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
         private void buttonDeleteVPN_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("Подтвердите сброс настроек.", "", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                return;
             int index = listBoxVPN.SelectedIndex;
             if (index < 0) return;
             otherVPNList.RemoveAt(index);
@@ -240,7 +259,7 @@ namespace RKN_Fix
             }
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void buttonResetSettings_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Подтвердите сброс настроек.", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 Properties.Settings.Default.Reset();
