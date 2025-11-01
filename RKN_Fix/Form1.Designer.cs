@@ -402,7 +402,7 @@
             // 
             // buttonClose
             // 
-            buttonClose.Location = new Point(656, 76);
+            buttonClose.Location = new Point(656, 73);
             buttonClose.Name = "buttonClose";
             buttonClose.Size = new Size(100, 25);
             buttonClose.TabIndex = 0;
@@ -734,7 +734,7 @@
             // buttonAutoConfig
             // 
             buttonAutoConfig.Font = new Font("Segoe UI", 9F);
-            buttonAutoConfig.Location = new Point(144, 76);
+            buttonAutoConfig.Location = new Point(144, 73);
             buttonAutoConfig.Name = "buttonAutoConfig";
             buttonAutoConfig.Size = new Size(130, 25);
             buttonAutoConfig.TabIndex = 10;
@@ -755,7 +755,7 @@
             // 
             // buttonStopAll
             // 
-            buttonStopAll.Location = new Point(518, 76);
+            buttonStopAll.Location = new Point(518, 73);
             buttonStopAll.Name = "buttonStopAll";
             buttonStopAll.Size = new Size(100, 25);
             buttonStopAll.TabIndex = 8;
@@ -817,6 +817,8 @@
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximumSize = new Size(802, 630);
+            MinimumSize = new Size(802, 630);
             Name = "Form1";
             Text = "AntiRKN";
             FormClosing += Form1_FormClosing;
