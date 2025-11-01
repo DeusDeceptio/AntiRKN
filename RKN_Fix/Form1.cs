@@ -25,7 +25,7 @@ namespace AntiRKN
                 ApplyLightTheme();
             else
                 ApplyDarkTheme();
-            
+
             checkBoxAutoStart.Checked = Properties.Settings.Default.autostart;
 
             checkBoxQuiet.Checked = Properties.Settings.Default.quietStart;
@@ -37,7 +37,7 @@ namespace AntiRKN
             toolTip1.AutoPopDelay = 5000;
             toolTip1.InitialDelay = 1000;
             toolTip1.ReshowDelay = 500;
-            
+
             toolTip1.ShowAlways = true;
 
             toolTip1.SetToolTip(this.buttonSearchConf, "Активна, если в вашей сборке есть \"АВТО - ПОИСК пре - конфига.exe\"");
@@ -84,7 +84,7 @@ namespace AntiRKN
                     selectedLists.Add(listName);
                 }
             }
-            
+
             foreach (var file in Directory.GetFiles(Application.StartupPath + "lists"))
             {
                 string fileName = Path.GetFileName(file);
@@ -348,7 +348,7 @@ namespace AntiRKN
             else
             {
                 rkApp.DeleteValue("AntiRKN");
-            }              
+            }
         }
 
         private void otherVPNinContMenu_Click(object sender, EventArgs e)
@@ -367,7 +367,6 @@ namespace AntiRKN
 
         private void buttonStop_Click(object sender, EventArgs e)
         {
-            int mode = Convert.ToInt32((sender as Button).Tag);
             KillProcesses killProcesses = new KillProcesses();
             foreach (var item in otherVPNList)
             {
