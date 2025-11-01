@@ -1,4 +1,3 @@
-using Microsoft.Win32;
 using System.Diagnostics;
 
 namespace RKN_Fix
@@ -329,19 +328,17 @@ namespace RKN_Fix
 
         private void checkBoxAutoStart_CheckedChanged(object sender, EventArgs e)
         {
-            using ()
+            Microsoft.Win32.RegistryKey rkApp = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(
+                "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            Properties.Settings.Default.autostart = checkBoxAutoStart.Checked;
+            if (checkBoxAutoStart.Checked)
             {
-                Properties.Settings.Default.autostart = checkBoxAutoStart.Checked;
-                RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-                if (checkBoxAutoStart.Checked)
-                {
-                    rkApp.SetValue("RKN_Fix", Application.ExecutablePath);
-                }
-                else
-                {
-                    rkApp.DeleteValue("RKN_Fix");
-                }
-            }                
+                rkApp.SetValue("RKN_Fix", Application.ExecutablePath);
+            }
+            else
+            {
+                rkApp.DeleteValue("RKN_Fix");
+            }              
         }
 
         private void otherVPNinContMenu_Click(object sender, EventArgs e)
