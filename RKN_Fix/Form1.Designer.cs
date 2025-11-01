@@ -42,8 +42,9 @@
             }
 
             // Кнопки 
-            var buttons = new[] { button1, buttonSaveLists, button2, buttonUpdate, buttonStartZapDef,
-                         buttonStartZap, buttonOpenExplorer, buttonSaveVPN, buttonDeleteVPN, buttonStartVPN, buttonResetSettings };
+            var buttons = new[] { buttonClose, buttonSaveLists, button2, buttonUpdate, buttonStartZapDef,
+                         buttonStartZap, buttonOpenExplorer, buttonSaveVPN, buttonDeleteVPN, buttonStartVPN, buttonResetSettings, 
+                         buttonAutoConfig, buttonSearchConf, buttonStopAll, buttonStopVPN, buttonStopZapret};
             foreach (var button in buttons)
             {
                 if (button != null)
@@ -167,8 +168,9 @@
             }
 
             // Кнопки
-            var buttons = new[] { button1, buttonSaveLists, button2, buttonUpdate, buttonStartZapDef,
-                         buttonStartZap, buttonOpenExplorer, buttonSaveVPN, buttonDeleteVPN, buttonStartVPN, buttonResetSettings };
+            var buttons = new[] { buttonClose, buttonSaveLists, button2, buttonUpdate, buttonStartZapDef,
+                         buttonStartZap, buttonOpenExplorer, buttonSaveVPN, buttonDeleteVPN, buttonStartVPN, buttonResetSettings,
+                         buttonAutoConfig, buttonSearchConf, buttonStopAll, buttonStopVPN, buttonStopZapret };
             foreach (var button in buttons)
             {
                 if (button != null)
@@ -315,7 +317,7 @@
             открытьМенюToolStripMenuItem = new ToolStripMenuItem();
             конфигПоУмолчаниюToolStripMenuItem = new ToolStripMenuItem();
             выходToolStripMenuItem = new ToolStripMenuItem();
-            button1 = new Button();
+            buttonClose = new Button();
             checkedListBoxLists = new CheckedListBox();
             groupBox1 = new GroupBox();
             button2 = new Button();
@@ -323,6 +325,7 @@
             buttonUpdate = new Button();
             listBoxConfigs = new ListBox();
             groupBox2 = new GroupBox();
+            buttonStopZapret = new Button();
             label1 = new Label();
             buttonStartZapDef = new Button();
             buttonStartZap = new Button();
@@ -333,6 +336,7 @@
             toolStripMenuItem1 = new ToolStripMenuItem();
             toolStripMenuItem2 = new ToolStripMenuItem();
             groupBox3 = new GroupBox();
+            buttonStopVPN = new Button();
             buttonStartVPN = new Button();
             label4 = new Label();
             buttonDeleteVPN = new Button();
@@ -345,6 +349,9 @@
             textBoxArg = new TextBox();
             textBoxPath = new TextBox();
             groupBox4 = new GroupBox();
+            buttonAutoConfig = new Button();
+            buttonSearchConf = new Button();
+            buttonStopAll = new Button();
             buttonResetSettings = new Button();
             checkBoxTheme = new CheckBox();
             checkBoxAutoStart = new CheckBox();
@@ -393,15 +400,15 @@
             выходToolStripMenuItem.Text = "Выход";
             выходToolStripMenuItem.Click += close_Click;
             // 
-            // button1
+            // buttonClose
             // 
-            button1.Location = new Point(656, 18);
-            button1.Name = "button1";
-            button1.Size = new Size(100, 25);
-            button1.TabIndex = 0;
-            button1.Text = "Выход";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += close_Click;
+            buttonClose.Location = new Point(656, 76);
+            buttonClose.Name = "buttonClose";
+            buttonClose.Size = new Size(100, 25);
+            buttonClose.TabIndex = 0;
+            buttonClose.Text = "Выход";
+            buttonClose.UseVisualStyleBackColor = true;
+            buttonClose.Click += close_Click;
             // 
             // checkedListBoxLists
             // 
@@ -448,7 +455,7 @@
             // 
             // buttonUpdate
             // 
-            buttonUpdate.Location = new Point(318, 18);
+            buttonUpdate.Location = new Point(518, 22);
             buttonUpdate.Name = "buttonUpdate";
             buttonUpdate.Size = new Size(100, 25);
             buttonUpdate.TabIndex = 3;
@@ -468,6 +475,7 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(buttonStopZapret);
             groupBox2.Controls.Add(label1);
             groupBox2.Controls.Add(buttonStartZapDef);
             groupBox2.Controls.Add(buttonStartZap);
@@ -479,6 +487,17 @@
             groupBox2.TabIndex = 5;
             groupBox2.TabStop = false;
             groupBox2.Text = "Конфиги Zapret";
+            // 
+            // buttonStopZapret
+            // 
+            buttonStopZapret.Location = new Point(162, 375);
+            buttonStopZapret.Name = "buttonStopZapret";
+            buttonStopZapret.Size = new Size(80, 20);
+            buttonStopZapret.TabIndex = 16;
+            buttonStopZapret.Tag = "2";
+            buttonStopZapret.Text = "Остановить";
+            buttonStopZapret.UseVisualStyleBackColor = true;
+            buttonStopZapret.Click += buttonStop_Click;
             // 
             // label1
             // 
@@ -492,10 +511,10 @@
             // buttonStartZapDef
             // 
             buttonStartZapDef.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            buttonStartZapDef.Font = new Font("Segoe UI", 6F);
-            buttonStartZapDef.Location = new Point(144, 429);
+            buttonStartZapDef.Font = new Font("Segoe UI", 7.5F);
+            buttonStartZapDef.Location = new Point(114, 429);
             buttonStartZapDef.Name = "buttonStartZapDef";
-            buttonStartZapDef.Size = new Size(100, 25);
+            buttonStartZapDef.Size = new Size(130, 25);
             buttonStartZapDef.TabIndex = 1;
             buttonStartZapDef.Text = "Запуск по умолчанию";
             buttonStartZapDef.UseVisualStyleBackColor = true;
@@ -557,6 +576,7 @@
             // 
             // groupBox3
             // 
+            groupBox3.Controls.Add(buttonStopVPN);
             groupBox3.Controls.Add(buttonStartVPN);
             groupBox3.Controls.Add(label4);
             groupBox3.Controls.Add(buttonDeleteVPN);
@@ -574,6 +594,17 @@
             groupBox3.TabIndex = 6;
             groupBox3.TabStop = false;
             groupBox3.Text = "Прочие обходы";
+            // 
+            // buttonStopVPN
+            // 
+            buttonStopVPN.Location = new Point(144, 428);
+            buttonStopVPN.Name = "buttonStopVPN";
+            buttonStopVPN.Size = new Size(100, 25);
+            buttonStopVPN.TabIndex = 9;
+            buttonStopVPN.Tag = "1";
+            buttonStopVPN.Text = "Остановить";
+            buttonStopVPN.UseVisualStyleBackColor = true;
+            buttonStopVPN.Click += buttonStop_Click;
             // 
             // buttonStartVPN
             // 
@@ -684,22 +715,58 @@
             // 
             // groupBox4
             // 
+            groupBox4.Controls.Add(buttonAutoConfig);
+            groupBox4.Controls.Add(buttonSearchConf);
+            groupBox4.Controls.Add(buttonStopAll);
             groupBox4.Controls.Add(buttonResetSettings);
             groupBox4.Controls.Add(checkBoxTheme);
             groupBox4.Controls.Add(checkBoxAutoStart);
             groupBox4.Controls.Add(checkBoxQuiet);
-            groupBox4.Controls.Add(button1);
+            groupBox4.Controls.Add(buttonClose);
             groupBox4.Controls.Add(buttonUpdate);
             groupBox4.Location = new Point(12, 472);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(762, 57);
+            groupBox4.Size = new Size(762, 107);
             groupBox4.TabIndex = 7;
             groupBox4.TabStop = false;
             groupBox4.Text = "Настройки";
             // 
+            // buttonAutoConfig
+            // 
+            buttonAutoConfig.Font = new Font("Segoe UI", 9F);
+            buttonAutoConfig.Location = new Point(144, 76);
+            buttonAutoConfig.Name = "buttonAutoConfig";
+            buttonAutoConfig.Size = new Size(130, 25);
+            buttonAutoConfig.TabIndex = 10;
+            buttonAutoConfig.Text = "Автозапуск конфига";
+            buttonAutoConfig.UseVisualStyleBackColor = true;
+            buttonAutoConfig.Click += buttonAutoConfig_Click;
+            // 
+            // buttonSearchConf
+            // 
+            buttonSearchConf.Font = new Font("Segoe UI", 8F);
+            buttonSearchConf.Location = new Point(144, 22);
+            buttonSearchConf.Name = "buttonSearchConf";
+            buttonSearchConf.Size = new Size(130, 25);
+            buttonSearchConf.TabIndex = 9;
+            buttonSearchConf.Text = "Авто-поиск конфига";
+            buttonSearchConf.UseVisualStyleBackColor = true;
+            buttonSearchConf.Click += buttonSearchConf_Click;
+            // 
+            // buttonStopAll
+            // 
+            buttonStopAll.Location = new Point(518, 76);
+            buttonStopAll.Name = "buttonStopAll";
+            buttonStopAll.Size = new Size(100, 25);
+            buttonStopAll.TabIndex = 8;
+            buttonStopAll.Tag = "0";
+            buttonStopAll.Text = "Остановить все";
+            buttonStopAll.UseVisualStyleBackColor = true;
+            buttonStopAll.Click += buttonStop_Click;
+            // 
             // buttonResetSettings
             // 
-            buttonResetSettings.Location = new Point(512, 18);
+            buttonResetSettings.Location = new Point(656, 22);
             buttonResetSettings.Name = "buttonResetSettings";
             buttonResetSettings.Size = new Size(100, 25);
             buttonResetSettings.TabIndex = 7;
@@ -710,7 +777,7 @@
             // checkBoxTheme
             // 
             checkBoxTheme.AutoSize = true;
-            checkBoxTheme.Location = new Point(213, 22);
+            checkBoxTheme.Location = new Point(15, 82);
             checkBoxTheme.Name = "checkBoxTheme";
             checkBoxTheme.Size = new Size(99, 19);
             checkBoxTheme.TabIndex = 6;
@@ -721,7 +788,7 @@
             // checkBoxAutoStart
             // 
             checkBoxAutoStart.AutoSize = true;
-            checkBoxAutoStart.Location = new Point(119, 22);
+            checkBoxAutoStart.Location = new Point(15, 52);
             checkBoxAutoStart.Name = "checkBoxAutoStart";
             checkBoxAutoStart.Size = new Size(88, 19);
             checkBoxAutoStart.TabIndex = 5;
@@ -744,7 +811,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(786, 537);
+            ClientSize = new Size(786, 591);
             Controls.Add(groupBox4);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
@@ -770,7 +837,7 @@
         #endregion
 
         private NotifyIcon notifyIcon1;
-        private Button button1;
+        private Button buttonClose;
         private ContextMenuStrip contextMenuStripNotify;
         private ToolStripMenuItem открытьМенюToolStripMenuItem;
         private CheckedListBox checkedListBoxLists;
@@ -808,5 +875,10 @@
         private CheckBox checkBoxQuiet;
         private Button buttonResetSettings;
         private ToolStripMenuItem конфигПоУмолчаниюToolStripMenuItem;
+        private Button buttonStopAll;
+        private Button buttonStopVPN;
+        private Button buttonStopZapret;
+        private Button buttonSearchConf;
+        private Button buttonAutoConfig;
     }
 }

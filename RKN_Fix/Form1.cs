@@ -1,5 +1,7 @@
 using Microsoft.Win32;
+using System;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace RKN_Fix
 {
@@ -14,6 +16,7 @@ namespace RKN_Fix
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.notifyIcon1.Visible = false;
             readSettings();
             updateUI();
 
@@ -40,6 +43,24 @@ namespace RKN_Fix
             updateBoxLists();
             updateConfigList();
             updateVPNList();
+            updateContextMenuNotify();
+            buttonSearchConf.Enabled = File.Exists(Application.StartupPath + "АВТО-ПОИСК пре-конфига.exe");
+            buttonAutoConfig.Enabled = File.Exists(Application.StartupPath + "Установить как службу в АВТОЗАПУСК v2.exe");
+        }
+
+        private void updateContextMenuNotify()
+        {
+            if (otherVPNList.Count == 0) return;
+            for (int i = 0; i < otherVPNList.Count; i++)
+            {
+                ToolStripMenuItem toolStripButton = new ToolStripMenuItem();
+                toolStripButton.Text =
+                    !string.IsNullOrEmpty(otherVPNList[i][0].Trim()) ? otherVPNList[i][0]
+                                           : Path.GetFileName(otherVPNList[i][1]);
+                toolStripButton.Tag = i;
+                toolStripButton.Click += otherVPNinContMenu_Click;
+                contextMenuStripNotify.Items.Insert(i + 2, toolStripButton);
+            }
         }
 
         private void updateBoxLists()
@@ -67,6 +88,7 @@ namespace RKN_Fix
         private void updateConfigList()
         {
             listBoxConfigs.Items.Clear();
+            textBoxSelect.Text = string.Empty;
             foreach (var file in Directory.GetFiles(Application.StartupPath + "pre-configs"))
             {
                 listBoxConfigs.Items.Add(Path.GetFileName(file));
@@ -76,9 +98,12 @@ namespace RKN_Fix
         private void updateVPNList()
         {
             listBoxVPN.Items.Clear();
+            textBoxArg.Text = string.Empty;
+            textBoxName.Text = string.Empty;
+            textBoxPath.Text = string.Empty;
             foreach (var vpns in otherVPNList)
             {
-                listBoxVPN.Items.Add(!string.IsNullOrEmpty(vpns[0]) ? vpns[0] : vpns[1]);
+                listBoxVPN.Items.Add(!string.IsNullOrEmpty(vpns[0].Trim()) ? vpns[0] : Path.GetFileName(vpns[1]));
             }
         }
 
@@ -138,7 +163,8 @@ namespace RKN_Fix
 
         private void button2_Click(object sender, EventArgs e)
         {
-            try { 
+            try
+            {
                 Process.Start("explorer.exe", "\"" + Application.StartupPath + "lists\\\"");
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -158,7 +184,8 @@ namespace RKN_Fix
                 MessageBox.Show("Выберете конфиг!");
                 return;
             }
-            try { 
+            try
+            {
                 Process.Start(Application.StartupPath + @"pre-configs\" + textBoxSelect.Text);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -214,6 +241,7 @@ namespace RKN_Fix
             Properties.Settings.Default.otherVPNs += inFile;
             string[] strings = { textBoxName.Text, textBoxPath.Text, textBoxArg.Text };
             otherVPNList.Add(strings);
+            updateVPNList();
         }
 
         private void listBoxVPN_SelectedIndexChanged(object sender, EventArgs e)
@@ -238,8 +266,7 @@ namespace RKN_Fix
 
         private void buttonDeleteVPN_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Подтвердите сброс настроек.", "", MessageBoxButtons.YesNo) != DialogResult.Yes)
-                return;
+            if (MessageBox.Show("Подтвердите удаление записи.", "", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
             int index = listBoxVPN.SelectedIndex;
             if (index < 0) return;
             otherVPNList.RemoveAt(index);
@@ -261,8 +288,11 @@ namespace RKN_Fix
 
         private void buttonResetSettings_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Подтвердите сброс настроек.", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                Properties.Settings.Default.Reset();
+            if (MessageBox.Show("Подтвердите сброс настроек.", "", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            otherVPNList.Clear();
+            Properties.Settings.Default.Reset();
+            Properties.Settings.Default.Save();
+
         }
 
         internal void readSettings()
@@ -302,6 +332,51 @@ namespace RKN_Fix
             {
                 rkApp.DeleteValue("RKN_Fix");
             }
+        }
+
+        private void otherVPNinContMenu_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = sender as ToolStripMenuItem;
+            if (item.Tag == null) return;
+            int index = (int)item.Tag;
+            string path = otherVPNList[index][1];
+            string arg = otherVPNList[index][2];
+            try
+            {
+                Process.Start(path, arg);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void buttonStop_Click(object sender, EventArgs e)
+        {
+            int mode = (int)(sender as Button).Tag;
+            KillProcesses killProcesses = new KillProcesses();
+            killProcesses.mode = mode;
+            if (mode <= 1)
+                foreach (var item in otherVPNList)
+                {
+                    killProcesses.processesName.Add(Path.GetFileName(item[1]).Replace(".exe", ""));
+                }
+            killProcesses.ShowDialog();
+        }
+
+        private void buttonSearchConf_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start(Application.StartupPath + "АВТО-ПОИСК пре-конфига.exe");
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void buttonAutoConfig_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start(Application.StartupPath + "Установить как службу в АВТОЗАПУСК v2.exe");
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
     }
 }
