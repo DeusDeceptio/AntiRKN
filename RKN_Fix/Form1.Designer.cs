@@ -33,14 +33,6 @@
                 contextMenuStripTextBoxSelect.Renderer = null;
             }
 
-            if (contextMenuStrip1 != null)
-            {
-                contextMenuStrip1.BackColor = defaultBackColor;
-                contextMenuStrip1.ForeColor = defaultForeColor;
-                contextMenuStrip1.RenderMode = ToolStripRenderMode.ManagerRenderMode;
-                contextMenuStrip1.Renderer = null;
-            }
-
             // Кнопки 
             var buttons = new[] { buttonClose, buttonSaveLists, button2, buttonUpdate, buttonStartZapDef,
                          buttonStartZap, buttonOpenExplorer, buttonSaveVPN, buttonDeleteVPN, buttonStartVPN, buttonResetSettings, 
@@ -113,8 +105,7 @@
             }
 
             // ToolStripMenuItem
-            var menuItems = new[] { открытьМенюToolStripMenuItem, выходToolStripMenuItem,
-                           toolStripMenuItem1, toolStripMenuItem2, сделатьПоУмолчаниюToolStripMenuItem };
+            var menuItems = new[] { открытьМенюToolStripMenuItem, выходToolStripMenuItem, сделатьПоУмолчаниюToolStripMenuItem };
             foreach (var menuItem in menuItems)
             {
                 if (menuItem != null)
@@ -154,14 +145,6 @@
                 contextMenuStripTextBoxSelect.ForeColor = foreColor;
                 contextMenuStripTextBoxSelect.RenderMode = ToolStripRenderMode.Professional;
                 contextMenuStripTextBoxSelect.Renderer = new DarkToolStripRenderer();
-            }
-
-            if (contextMenuStrip1 != null)
-            {
-                contextMenuStrip1.BackColor = controlDark;
-                contextMenuStrip1.ForeColor = foreColor;
-                contextMenuStrip1.RenderMode = ToolStripRenderMode.Professional;
-                contextMenuStrip1.Renderer = new DarkToolStripRenderer();
             }
 
             // Кнопки
@@ -236,8 +219,8 @@
             }
 
             // ToolStripMenuItem
-            var menuItems = new[] { открытьМенюToolStripMenuItem, выходToolStripMenuItem,
-                           toolStripMenuItem1, toolStripMenuItem2, сделатьПоУмолчаниюToolStripMenuItem };
+            var menuItems = new[] { открытьМенюToolStripMenuItem, выходToolStripMenuItem, 
+                сделатьПоУмолчаниюToolStripMenuItem, отключитьВсеToolStripMenuItem };
             foreach (var menuItem in menuItems)
             {
                 if (menuItem != null)
@@ -326,9 +309,6 @@
             textBoxSelect = new TextBox();
             contextMenuStripTextBoxSelect = new ContextMenuStrip(components);
             сделатьПоУмолчаниюToolStripMenuItem = new ToolStripMenuItem();
-            contextMenuStrip1 = new ContextMenuStrip(components);
-            toolStripMenuItem1 = new ToolStripMenuItem();
-            toolStripMenuItem2 = new ToolStripMenuItem();
             groupBox3 = new GroupBox();
             buttonStartVPN = new Button();
             label4 = new Label();
@@ -353,7 +333,6 @@
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             contextMenuStripTextBoxSelect.SuspendLayout();
-            contextMenuStrip1.SuspendLayout();
             groupBox3.SuspendLayout();
             groupBox4.SuspendLayout();
             SuspendLayout();
@@ -362,7 +341,7 @@
             // 
             notifyIcon1.ContextMenuStrip = contextMenuStripNotify;
             notifyIcon1.Icon = (Icon)resources.GetObject("notifyIcon1.Icon");
-            notifyIcon1.Text = "notifyIcon1";
+            notifyIcon1.Text = "AntiRKN";
             notifyIcon1.Visible = true;
             notifyIcon1.MouseDoubleClick += notifyIcon1_MouseDoubleClick;
             // 
@@ -388,6 +367,7 @@
             // 
             // отключитьВсеToolStripMenuItem
             // 
+            отключитьВсеToolStripMenuItem.BackColor = SystemColors.Control;
             отключитьВсеToolStripMenuItem.Name = "отключитьВсеToolStripMenuItem";
             отключитьВсеToolStripMenuItem.Size = new Size(202, 22);
             отключитьВсеToolStripMenuItem.Tag = "0";
@@ -396,6 +376,7 @@
             // 
             // выходToolStripMenuItem
             // 
+            выходToolStripMenuItem.BackColor = SystemColors.Control;
             выходToolStripMenuItem.Name = "выходToolStripMenuItem";
             выходToolStripMenuItem.Size = new Size(202, 22);
             выходToolStripMenuItem.Text = "Выход";
@@ -544,24 +525,6 @@
             сделатьПоУмолчаниюToolStripMenuItem.Text = "Сделать по умолчанию";
             сделатьПоУмолчаниюToolStripMenuItem.TextDirection = ToolStripTextDirection.Horizontal;
             сделатьПоУмолчаниюToolStripMenuItem.Click += сделатьПоУмолчаниюToolStripMenuItem_Click;
-            // 
-            // contextMenuStrip1
-            // 
-            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem2 });
-            contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(157, 48);
-            // 
-            // toolStripMenuItem1
-            // 
-            toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(156, 22);
-            toolStripMenuItem1.Text = "Открыть меню";
-            // 
-            // toolStripMenuItem2
-            // 
-            toolStripMenuItem2.Name = "toolStripMenuItem2";
-            toolStripMenuItem2.Size = new Size(156, 22);
-            toolStripMenuItem2.Text = "Выход";
             // 
             // groupBox3
             // 
@@ -805,7 +768,6 @@
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             contextMenuStripTextBoxSelect.ResumeLayout(false);
-            contextMenuStrip1.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
             groupBox4.ResumeLayout(false);
@@ -832,9 +794,6 @@
         private TextBox textBoxSelect;
         private Label label1;
         private ContextMenuStrip contextMenuStripTextBoxSelect;
-        private ContextMenuStrip contextMenuStrip1;
-        private ToolStripMenuItem toolStripMenuItem1;
-        private ToolStripMenuItem toolStripMenuItem2;
         private ToolStripMenuItem сделатьПоУмолчаниюToolStripMenuItem;
         private GroupBox groupBox3;
         private Button buttonSaveVPN;

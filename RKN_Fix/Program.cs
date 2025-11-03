@@ -1,4 +1,6 @@
+using System.Diagnostics;
 using System.Drawing.Imaging;
+using System.Reflection;
 
 namespace AntiRKN
 {
@@ -10,10 +12,17 @@ namespace AntiRKN
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            using (Mutex mutex = new Mutex(false, "Global\\" + "AntiRKN"))
+            {
+                if (!mutex.WaitOne(0, false))
+                {
+                    return;
+                }
+                // To customize application configuration such as set high DPI settings or default font,
+                // see https://aka.ms/applicationconfiguration.
+                ApplicationConfiguration.Initialize();
+                Application.Run(new Form1());
+            }
         }
     }
 }
